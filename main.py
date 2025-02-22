@@ -1,6 +1,6 @@
 import secrets
 import hashlib
-from modules import AES_encrypt,AES_decrypt,encrypt_RSA,decrypt_RSA
+from modules import encryption_AES,decryption_AES,encryption_RSA,decryption_RSA
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
@@ -33,7 +33,7 @@ print(f"SHA-256 secret hash key (hex): {secret_key_hex}\n")
 
 ##### AES encryption #####
 
-encrypted_message = AES_encrypt(message, secret_key)
+encrypted_message = encryption_AES(message, secret_key)
 print(f"AES encrypted message (hex): {encrypted_message.hex()}\n")
 
 
@@ -52,7 +52,7 @@ print(f"RSA public key (hex):{public_key_pem.hex()}\n")
 
 
 #Encrypt secret key
-secret_key_encrypted= encrypt_RSA(secret_key,public_key)
+secret_key_encrypted= encryption_RSA(secret_key,public_key)
 print(f"RSA encrypted secret key (hex): {secret_key_encrypted.hex()}\n")
 
 
@@ -72,11 +72,11 @@ encrypted_message=final_encryption[256:len(final_encryption)]
 
 ##### decrypt secret key #####
 
-decrypted_secret_key=decrypt_RSA(secret_key_encrypted,private_key)
+decrypted_secret_key=decryption_RSA(secret_key_encrypted,private_key)
 print(f"RSA decrypted secret key (hex): {decrypted_secret_key.hex()}\n")
 
 ##### AES decrypt #####
 
-decrypted_message=AES_decrypt(encrypted_message,decrypted_secret_key)
+decrypted_message=decryption_AES(encrypted_message,decrypted_secret_key)
 print(f"AES decrypted message: {decrypted_message}\n")
 

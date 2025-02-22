@@ -4,7 +4,7 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import hashes
 
 
-def AES_encrypt(message, secret_key):
+def encryption_AES(message, secret_key):
     """
     This function takes a message and a secret key and encrypts it via AES in ECB cipher mode.
 
@@ -25,7 +25,7 @@ def AES_encrypt(message, secret_key):
     return encrypted
 
 
-def AES_decrypt(encrypted_message,secret_key):
+def decryption_AES(encrypted_message,secret_key):
     """
     This function takes a message encrypted by AES with ECB cipher mode and decrypts it.
 
@@ -44,7 +44,7 @@ def AES_decrypt(encrypted_message,secret_key):
     return decrypted_message
 
 
-def encrypt_RSA(secret_key, public_key):
+def encryption_RSA(secret_key, public_key):
     """
     This function encrypts the secret key with public key of RSA
 
@@ -55,7 +55,7 @@ def encrypt_RSA(secret_key, public_key):
     Returns:
     bytes: encrypted secret key
     """
-    encrypted_secret_key = public_key.encrypt(
+    encrypted = public_key.encrypt(
         secret_key,  
         padding.OAEP(
             mgf=padding.MGF1(algorithm=hashes.SHA256()),  
@@ -63,10 +63,10 @@ def encrypt_RSA(secret_key, public_key):
             label=None
         )
     )
-    return encrypted_secret_key
+    return encrypted
 
 
-def decrypt_RSA(secret_key_encrypted, private_key):
+def decryption_RSA(secret_key_encrypted, private_key):
     """
     This function decrypts the secret key with private key of RSA
 
@@ -77,7 +77,7 @@ def decrypt_RSA(secret_key_encrypted, private_key):
     Returns:
     bytes: decrypted secret key 
     """
-    decrypted_secret_key = private_key.decrypt(
+    decrypted = private_key.decrypt(
         secret_key_encrypted,
         padding.OAEP(
             mgf=padding.MGF1(algorithm=hashes.SHA256()),  
@@ -85,4 +85,4 @@ def decrypt_RSA(secret_key_encrypted, private_key):
             label=None
         )
     )
-    return decrypted_secret_key
+    return decrypted
